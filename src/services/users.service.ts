@@ -64,7 +64,7 @@ const userLogin = async (user: IUser) => {
   const token = await makeJwt({ header, payload, key });
 
   return {
-    user: user,
+    user: userDB,
     token: token
   }
 }

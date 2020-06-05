@@ -11,7 +11,8 @@ const getDishes = async () => {
       dish.thumbnail,
       dish.description,
       COALESCE((SELECT AVG(rating_value) FROM dish_rating WHERE dish_rating.dish_id=dish.dish_id), 0) rating
-    FROM dish;
+    FROM dish
+    ORDER BY rating DESC;
   `);
   return results.rows;
 }
@@ -61,7 +62,11 @@ const getDishById = async (dishId: number) => {
       dish_id,
       title,
       thumbnail,
-      description
+      description,
+      prepare,
+      doing,
+      eating,
+      COALESCE((SELECT AVG(rating_value) FROM dish_rating WHERE dish_rating.dish_id=dish.dish_id), 5) rating
     FROM dish
     WHERE ??=?
   `, ["dish_id", dishId]);
